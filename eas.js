@@ -34,7 +34,7 @@ function removeGrid() {
 
 function retrieveInput() {
     let size = 0;
-    while ((size <= 0) || (size > 100)){
+    while ((size <= 0) || (size > 100) || (isNaN(size))){
         size = parseInt(prompt("Enter a number between 1 and 100."));
     }
     generateGrid(size);
@@ -42,13 +42,13 @@ function retrieveInput() {
 
 function addCellListener(cell) {
     cell.addEventListener('mouseover', function(e){
-        cell.classList.add('colored-cell')
+        cell.classList.add('black-cell')
     });
 }
 
 function reset() {
     let cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
-        cell.classList.remove('colored-cell');
+        cell.classList.remove('black-cell');
     });
 }
