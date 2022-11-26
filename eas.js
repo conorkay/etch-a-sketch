@@ -1,3 +1,4 @@
+let color = 'black';
 retrieveInput();
 
 let resetButton = document.getElementById('reset-button');
@@ -11,6 +12,21 @@ resizeButton.addEventListener('click', function(e) {
     retrieveInput();
 });
 
+let toggleEraser = document.getElementById('eraser-toggle');
+toggleEraser.addEventListener('click', function(e) {
+    color = 'eraser';
+});
+
+let toggleBlack = document.getElementById('black-toggle');
+toggleBlack.addEventListener('click', function(e) {
+    color = 'black';
+});
+
+let toggleRainbow = document.getElementById('rainbow-toggle');
+toggleRainbow.addEventListener('click', function(e) {
+    color = 'rainbow';
+});
+
 function generateGrid(size) {
     for (let i = 0; i < size; ++i){
         var row = document.createElement('div');
@@ -18,8 +34,8 @@ function generateGrid(size) {
         for (let i = 0; i < size; ++i){
             let cell = document.createElement('div');
             cell.className = 'cell';
-            addCellListener(cell);
             row.appendChild(cell);
+            cell.addEventListener('mouseover', colorGrid);
         }
         document.getElementById('grid-container').appendChild(row);
     }
@@ -29,7 +45,7 @@ function removeGrid() {
     let rows = document.querySelectorAll('.row');
     rows.forEach(row => {
         row.remove();
-    })
+    });
 }
 
 function retrieveInput() {
@@ -40,15 +56,24 @@ function retrieveInput() {
     generateGrid(size);
 }
 
-function addCellListener(cell) {
-    cell.addEventListener('mouseover', function(e){
-        cell.classList.add('black-cell')
-    });
+function colorGrid() {
+    switch (color){
+        case 'black':
+            this.style.backgroundColor = '#000000';
+            break;
+        case 'eraser':
+            this.style.backgroundColor = '#FFFFFF';
+            break;
+        case 'rainbow':
+            let randColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+            this.style.backgroundColor = randColor;
+            break;
+    }
 }
 
 function reset() {
     let cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
-        cell.classList.remove('black-cell');
+            cell.style.backgroundColor = "#FFFFFF";
     });
 }
